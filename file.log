@@ -1,0 +1,1 @@
+Cannot assign Laravel\SerializableClosure\Serializers\Native to property Symfony\Component\Console\Input\InputArgument::$suggestedValues of type Closure|array

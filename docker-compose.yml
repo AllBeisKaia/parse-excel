@@ -1,0 +1,55 @@
+version: "3.4"
+
+services:
+    server:
+        image: nginx
+        depends_on:
+            - php
+        ports:
+            - "80:80"
+        volumes:
+            - ./docker/configs/nginx:/etc/nginx/templates
+            - ./src:/var/www/public:ro
+        command: nginx -g "daemon off;"
+
+    php:
+        image: allbeiskaia/php:8.2-fpm-alpine
+        expose:
+            - 9000
+        volumes:
+            - ./:/var/www/html
+        user: 1000:1000
+        extra_hosts:
+            - "host.docker.internal:host-gateway"
+
+    redis:
+        image: redis:alpine
+        command: redis-server --appendonly no --requirepass "${REDIS_PASSWORD}"
+        expose:
+            - ${REDIS_PORT}
+
+    socket:
+        image: node:20
+        environment:
+            SOCKET_PORT: ${SOCKET_PORT}
+        depends_on:
+            - redis
+        user: "node"
+        volumes:
+          - ./socket:/var/www/html
+        ports:
+          - "${SOCKET_PORT}:${SOCKET_PORT}"
+        working_dir: /var/www/html
+        command: bash -c "npm install && npm start"
+
+    postgres:
+        image: postgres
+        environment:
+            POSTGRES_DB: ${DB_DATABASE}
+            POSTGRES_USER: ${DB_USERNAME}
+            POSTGRES_PASSWORD: ${DB_PASSWORD}
+        ports:
+            - "${DB_PORT}:${DB_PORT}"
+        volumes:
+            - ./docker/data/database:/var/lib/postgresql/data
+            - ./docker/data/dump:/docker-entrypoint-initdb.d
