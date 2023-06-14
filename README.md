@@ -7,3 +7,5 @@
 ### can use parser after register, or use seed for create test user and login
 
 ### test file placed in root ditectory (text.xlsx)
+
+### for socket work need run queue
