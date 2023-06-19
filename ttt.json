@@ -1,0 +1,15 @@
+{
+  "uuid": "f45dcba4-ec3a-4ece-a1bf-b09edbf701d5",
+  "displayName": "App\\Jobs\\ExcelParserJob",
+  "job": "Illuminate\\Queue\\CallQueuedHandler@call",
+  "maxTries": null,
+  "maxExceptions": null,
+  "failOnTimeout": false,
+  "backoff": null,
+  "timeout": null,
+  "retryUntil": null,
+  "data": {
+    "commandName": "App\\Jobs\\ExcelParserJob",
+    "command": "O:23:\"App\\Jobs\\ExcelParserJob\":7:{s:11:\"\u0000*\u0000fileName\";s:71:\"\/var\/www\/html\/storage\/app\/xjQg0lbyDKRYVEXuDGMEwioqAeKvwYExuLRaHuBW.xlsx\";s:13:\"\u0000*\u0000rowsAmount\";i:2475;s:7:\"\u0000*\u0000step\";i:0;s:11:\"\u0000*\u0000stepSize\";i:1000;s:12:\"\u0000*\u0000structure\";a:3:{i:0;s:2:\"id\";i:1;s:4:\"name\";i:2;s:4:\"date\";}s:9:\"\u0000*\u0000userId\";i:1;s:7:\"batchId\";s:36:\"99711a2d-de39-4532-b719-d2d479b721e4\";}"
+  }
+}

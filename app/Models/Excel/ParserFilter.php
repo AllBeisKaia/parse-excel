@@ -1,13 +1,17 @@
 <?php
 
-namespace App\Models\Custom;
+namespace App\Models\Excel;
 
 class ParserFilter implements \PhpOffice\PhpSpreadsheet\Reader\IReadFilter
 {
-    public function __construct(
-        public int $step,
-        public int $stepSize
-    ) {}
+    protected int $step;
+    protected int $stepSize;
+
+    public function __construct(ParserBuilder $builder)
+    {
+        $this->step = $builder->step;
+        $this->stepSize = $builder->stepSize;
+    }
 
     /**
      * @inheritDoc

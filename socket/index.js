@@ -7,22 +7,23 @@ var redis = new Redis({
     host: "redis",
 });
 
-redis.subscribe('parser');
+redis.psubscribe('*:parser');
 
-redis.on('message', (channel, message) => {
-    io.emit('parser', JSON.parse(message));
+redis.on('pmessage', (pattern, channel, message) => {
+    let ch = channel.split(':')
+    io.emit(ch[0] + ':parser', JSON.parse(message));
 });
 
 const httpServer = createServer();
 const io = new Server(httpServer, {
   cors: {
-    origin: "http://backend.local",
+    origin: process.env.APP_URL,
     credentials: true
   }
 });
 
 io.on('connection', () => {
-    console.log(process.env.SOCKET_PORT)
+    console.log('Connected')
 })
 
 httpServer.listen(process.env.SOCKET_PORT);

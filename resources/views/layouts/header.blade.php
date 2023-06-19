@@ -4,7 +4,7 @@
             <a href="{{ route('home') }}" class="flex items-center">
                 <span class="self-center text-xl font-semibold whitespace-nowrap dark:text-white">Home</span>
             </a>
-            <parser-bar></parser-bar>
+            <parser-bar :user="{{ auth()->user() }}"></parser-bar>
             <div class="flex items-center lg:order-2">
                 <div class="sm:fixed sm:top-0 sm:right-0 p-6 text-right bg-white border-gray-200 dark:bg-gray-800 rounded-bl-lg">
                     @guest

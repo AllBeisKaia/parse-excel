@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\RedirectResponse;
 use App\Http\Requests\FileRequest;
-use App\Jobs\StartParserJob;
-use App\Models\Row;
-use Illuminate\Support\Facades\Auth;
+use App\Actions\ExcelParserAction;
 use Illuminate\View\View;
+use App\Models\Row;
 
 class ParserController extends Controller
 {
@@ -27,13 +27,15 @@ class ParserController extends Controller
         return view('parser.parser');
     }
 
-    public function parseExcel(FileRequest $request)
+    public function parseExcel(FileRequest $request, ExcelParserAction $action): RedirectResponse
     {
         if ($request->hasfile('file')) {
             $file = $request->file('file');
 
-            if ($fileName = $file->store()) {
-                StartParserJob::dispatch(storage_path('app') . '/' . $fileName, Auth::id());
+            $fileName = $file->store();
+
+            if ($fileName !== false) {
+                $action(storage_path('app') . '/' . $fileName);
 
                 return redirect(route('parser.parserForm'))->with('parserStarted', 'File parser is started');
             }

@@ -22,11 +22,16 @@
 
     const status = ref(0);
 
+    const props = defineProps({
+      user: {}
+    })
+
     const socket = io("http://localhost:5000", {
         withCredentials: true,
+        auth: props.user.id
     });
 
-    socket.on('parser', (message) => {
+    socket.on(props.user.id + ':parser', (message) => {
         status.value = message;
     });
 </script>
